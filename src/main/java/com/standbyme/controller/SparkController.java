@@ -4,7 +4,8 @@ import com.standbyme.config.DataSourceProperties;
 import com.standbyme.config.SparkConig;
 import com.standbyme.domain.CalcTask;
 import com.standbyme.function.CalcTaskFuntion;
-import org.apache.spark.api.java.function.MapPartitionsFunction;
+import org.apache.spark.SparkContext;
+import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.sql.*;
 
 import java.util.Iterator;
@@ -16,9 +17,13 @@ public class SparkController {
 
         SparkSession sparkSession = SparkConig.getSparkSession();
 
-        String sql = "select * from t_calc_task";
+        //使用SparkContext获取对应的json文件
+        Dataset<Row> json = sparkSession.sqlContext().read().json("G:\\tmp\\result");
 
-        String table = "t_calc_task";
+        //打印出当前DataSet的框架结构
+        json.printSchema();
+
+        String sql = "select * from t_calc_task";
 
         Dataset<Row> dataset = getSelectByMysql(sparkSession, sql);
 
@@ -26,8 +31,12 @@ public class SparkController {
 
         Dataset<CalcTask> calcTaskDataset = dataset.mapPartitions(new CalcTaskFuntion(), Encoders.bean(CalcTask.class));
 
-        calcTaskDataset.show();
+        JavaRDD<CalcTask> calcTaskJavaRDD = calcTaskDataset.javaRDD();
 
+        Dataset<Row> dataFrame = sparkSession.createDataFrame(calcTaskJavaRDD, CalcTask.class);
+
+        dataFrame.show();
+        calcTaskDataset.show();
 
     }
 
