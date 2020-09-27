@@ -22,5 +22,7 @@ public class SparkSQLController {
         //打印数据到目录中
         jdbc.write().format("json").mode("overwrite").save("G:\\tmp\\json1111");
 
+
+
     }
 }

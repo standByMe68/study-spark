@@ -9,6 +9,7 @@ import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.sql.*;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Properties;
 
 public class SparkController {
@@ -30,6 +31,8 @@ public class SparkController {
         //dataset.show();
 
         Dataset<CalcTask> calcTaskDataset = dataset.mapPartitions(new CalcTaskFuntion(), Encoders.bean(CalcTask.class));
+
+        List<CalcTask> list = calcTaskDataset.collectAsList();
 
         JavaRDD<CalcTask> calcTaskJavaRDD = calcTaskDataset.javaRDD();
 
