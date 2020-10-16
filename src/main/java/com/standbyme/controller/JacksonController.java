@@ -11,16 +11,16 @@ public class JacksonController {
 
     public static void main(String[] args) {
 
-
         String xiaoming = "{\"name\":\"Mahesh\", \"age\":21}";
 
         ObjectMapper mapper = new ObjectMapper();
-
         try {
             Student student = mapper.readValue(xiaoming, Student.class);
             System.out.println(student);
 
             mapper.enable(SerializationConfig.Feature.INDENT_OUTPUT);
+
+            student.setName(null);
 
             String string = mapper.writeValueAsString(student);
 
@@ -29,8 +29,6 @@ public class JacksonController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
     }
 
 

@@ -2,6 +2,7 @@ package com.standbyme.controller;
 
 import com.standbyme.config.DataSourceMap;
 import com.standbyme.config.SparkConig;
+import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.function.ForeachFunction;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
@@ -12,7 +13,7 @@ public class SparkSQLController {
 
     //通过SqlContext获取对应的数据库操作
     public static void main(String[] args) {
-        SparkSession sparkSession = SparkConig.getSparkSession();
+        /*SparkSession sparkSession = SparkConig.getSparkSession();
 
         SQLContext sqlContext = sparkSession.sqlContext();
 
@@ -22,6 +23,11 @@ public class SparkSQLController {
         //打印数据到目录中
         jdbc.write().format("json").mode("overwrite").save("G:\\tmp\\json1111");
 
+        JavaRDD<Row> rowJavaRDD = jdbc.javaRDD();*/
+
+
+            String string = "water";
+            System.out.println(string.split("-")[0]);
 
 
     }

@@ -3,6 +3,7 @@ package com.standbyme.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreType;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
 
@@ -10,6 +11,7 @@ import java.io.Serializable;
 public class Student implements Serializable {
 
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    @JsonProperty(value = "user_name")
     private String name;
 
     @JsonIgnore
